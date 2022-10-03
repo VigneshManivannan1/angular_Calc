@@ -2,7 +2,9 @@
 
 <div class="ext-calc">
   <div id="body-calc">
-    <input type="text" class="screen-calc" value="0" disabled />
+    <input type="text" class="screen-calc" [(ngModel)]="valueOutput" disabled />
+
+
     <div class="btn-calc" mat-elevation-z8>
       <button type="button" class="operator" value="+">+</button>
       <button type="button" class="operator" value="-">-</button>
@@ -19,8 +21,12 @@
       <button type="button" value="3">3</button>
       <button type="button" value="0">0</button>
       <button type="button" class="decimal function" value=".">.</button>
-      <button type="button" class="clear function" value="0">C</button>
+      <button type="button" class="clear function" value="0">Ans</button>
       <button type="button" class="equal-sign operator" value="=">=</button>
+      <button type="button" value="Sin">Sin</button>
+      <button type="button" value="Cos">Cos</button>
+      <button type="button" value="Tan">Tan</button>
+      <button type="button" value="Exp">Exp</button>
     </div>
   </div>
 </div>

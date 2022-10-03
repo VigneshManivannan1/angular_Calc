@@ -3,19 +3,17 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-calc',
   templateUrl: './calc.component.html',
-  styleUrls: ['./calc.component.css']
+  styleUrls: ['./calc.component.css'],
 })
 export class CalcComponent implements OnInit {
-
-  constructor() { }
-  public valueOutput = 0;;
+  constructor() {}
+  public valueOutput = 0;
   ngOnInit() {
-    
     const calculator = {
       displayValue: '0',
-      firstOperand: null,
-      waitingForSecondOperand: false,
-      operator: null
+      firstValue: null,
+      waitingForsecondValue: false,
+      operator: null,
     };
 
     function updateDisplay() {
@@ -25,15 +23,15 @@ export class CalcComponent implements OnInit {
 
     function resetCalculator() {
       calculator.displayValue = '0';
-      calculator.firstOperand = null;
-      calculator.waitingForSecondOperand = false;
+      calculator.firstValue = null;
+      calculator.waitingForsecondValue = false;
       calculator.operator = null;
     }
 
     updateDisplay();
 
     const keys: any = document.querySelector('.btn-calc');
-    keys.addEventListener('click', event => {
+    keys.addEventListener('click', (event) => {
       const target = event.target;
       if (!target.matches('button')) {
         return;
@@ -62,11 +60,11 @@ export class CalcComponent implements OnInit {
     });
 
     function inputDigit(digit) {
-      const { displayValue, waitingForSecondOperand } = calculator;
+      const { displayValue, waitingForsecondValue } = calculator;
 
-      if (waitingForSecondOperand === true) {
+      if (waitingForsecondValue === true) {
         calculator.displayValue = digit;
-        calculator.waitingForSecondOperand = false;
+        calculator.waitingForsecondValue = false;
       } else {
         calculator.displayValue =
           displayValue === '0' ? digit : displayValue + digit;
@@ -74,7 +72,7 @@ export class CalcComponent implements OnInit {
     }
 
     function inputDecimal(dot) {
-      if (calculator.waitingForSecondOperand === true) {
+      if (calculator.waitingForsecondValue === true) {
         return;
       }
       if (!calculator.displayValue.includes(dot)) {
@@ -82,33 +80,32 @@ export class CalcComponent implements OnInit {
       }
     }
     const performCalculation = {
-      '/': (firstOperand, secondOperand) => firstOperand / secondOperand,
-      '*': (firstOperand, secondOperand) => firstOperand * secondOperand,
-      '+': (firstOperand, secondOperand) => firstOperand + secondOperand,
-      '-': (firstOperand, secondOperand) => firstOperand - secondOperand,
-      '=': (firstOperand, secondOperand) => secondOperand
+      '/': (firstValue, secondValue) => firstValue / secondValue,
+      '*': (firstValue, secondValue) => firstValue * secondValue,
+      '+': (firstValue, secondValue) => firstValue + secondValue,
+      '-': (firstValue, secondValue) => firstValue - secondValue,
+      '=': (firstValue, secondValue) => secondValue,
     };
 
     function handleOperator(nextOperator) {
-      const { firstOperand, displayValue, operator } = calculator;
+      const { firstValue, displayValue, operator } = calculator;
       const inputValue = parseFloat(displayValue);
 
-      if (operator && calculator.waitingForSecondOperand) {
+      if (operator && calculator.waitingForsecondValue) {
         calculator.operator = nextOperator;
         return;
       }
 
-      if (firstOperand == null) {
-        calculator.firstOperand = inputValue;
+      if (firstValue == null) {
+        calculator.firstValue = inputValue;
       } else if (operator) {
-        const currentValue = firstOperand || 0;
+        const currentValue = firstValue || 0;
         const result = performCalculation[operator](currentValue, inputValue);
         calculator.displayValue = String(result);
-        calculator.firstOperand = result;
+        calculator.firstValue = result;
       }
-      calculator.waitingForSecondOperand = true;
+      calculator.waitingForsecondValue = true;
       calculator.operator = nextOperator;
     }
   }
-  }
-
+}
